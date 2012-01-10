@@ -5,7 +5,8 @@ license           "Apache 2.0"
 description       "Manage users in local groups"
 version           "0.1.1"
 
-recipe            "group_management::", "Add or Remove users from given groups lists"
+provides          "group_management"
+recipe            "group_management", "Add or Remove users from given groups lists"
 
 %w{ redhat centos fedora ubuntu debian }.each do |os|
   supports os
