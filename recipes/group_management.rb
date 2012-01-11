@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: group_management
-# Recipe:: default
+# Recipe:: group_management
 #
 # Copyright 2011 Junta de Andalucía
 #
