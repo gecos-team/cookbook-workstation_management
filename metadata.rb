@@ -12,77 +12,98 @@ recipe            "group_management::group_management", "Add or Remove users fro
   supports os
 end
 
-attribute 'group_management/group_management',
-  :display_name => "Groups lists",
-  :description  => "List of groups lists",
-  :type         => "array",
-  :required     => "required",
-  :recipes      => [ 'group_management::default' ]
-
-attribute 'group_management/group_management/administrator',
-  :display_name => "Administrators groups list",
-  :description  => "",
-  :type         => "array",
-  :required     => "required",
-  :recipes      => [ 'group_management::default' ]
-
-attribute 'group_management/group_management/administrator/groups',
+attribute 'group_management/admin_groups',
   :display_name => "Local admin groups",
   :description  => "List of local admin groups",
   :type         => "array",
-  :default      => ['admin','adm'],
-  :validation   => "custom",
-  :custom       => "^[\W]",
+  :default      => "[{'group':'admin'},{'group':'adm'}]",
   :recipes      => ['group_management::default']
 
-attribute 'group_management/group_management/administrator/users_to_add',
+
+attribute 'group_management/admin_groups/group',
+  :display_name => "Local admin group",
+  :type         => "string",
+  :validation   => "custom",
+  :custom       => "^[\W]",
+  :order        => "0",
+  :recipes      => ['group_management::default']
+
+attribute 'group_management/admin_users_to_add',
   :display_name => "Users to add to admin groups",
   :description  => "List of users that will be added to admin groups",
   :type         => "array",
-  :default      => [],
-  :validation   => "custom",
-  :custom       => "^[\W]",
+  :default      => "[]",
   :recipes      => ['group_management::default']
 
-attribute 'group_management/group_management/administrator/users_to_remove',
+attribute 'group_management/admin_users_to_add/user',
+  :display_name => "User to add to admin groups",
+  :description  => "User will be added to admin groups",
+  :type         => "string",
+  :validation   => "custom",
+  :custom       => "^[\W]",
+  :order        => "1",
+  :recipes      => ['group_management::default']
+
+attribute 'group_management/admin_users_to_remove',
   :display_name => "Users to remove from admin groups",
   :description  => "List of users that will be remove from admin groups",
   :type         => "array",
-  :default      => [],
-  :validation   => "custom",
-  :custom       => "^[\W]",
+  :default      => "[]",
   :recipes      => ['group_management::default']
 
-attribute 'group_management/group_management/base',
-  :display_name => "Base groups list",
-  :description  => "",
-  :type         => "array",
-  :required     => "required",
-  :recipes      => [ 'group_management::default' ]
+attribute 'group_management/admin_users_to_remove/user',
+  :display_name => "User to remove from admin groups",
+  :description  => "User will be remove from admin groups",
+  :type         => "string",
+  :validation   => "custom",
+  :custom       => "^[\W]",
+  :order        => "2",
+  :recipes      => ['group_management::default']
 
-attribute 'group_management/group_management/base/groups',
+attribute 'group_management/base_groups',
   :display_name => "Local base groups",
   :description  => "List of local base groups",
   :type         => "array",
-  :default      => ['base','adm'],
-  :validation   => "custom",
-  :custom       => "^[\W]",
+  :default      => "[{'group':'base'},{'group':'adm'}]",
   :recipes      => ['group_management::default']
 
-attribute 'group_management/group_management/base/users_to_add',
+attribute 'group_management/base_groups/group',
+  :display_name => "Local base group",
+  :type         => "string",
+  :validation   => "custom",
+  :custom       => "^[\W]",
+  :order        => "3",
+  :recipes      => ['group_management::default']
+
+attribute 'group_management/base_users_to_add',
   :display_name => "Users to add to base groups",
   :description  => "List of users that will be added to base groups",
   :type         => "array",
-  :default      => [],
-  :validation   => "custom",
-  :custom       => "^[\W]",
+  :default      => "[]",
   :recipes      => ['group_management::default']
 
-attribute 'group_management/group_management/base/users_to_remove',
+attribute 'group_management/base_users_to_add/user',
+  :display_name => "User to add to base groups",
+  :description  => "User will be added to base groups",
+  :type         => "string",
+  :validation   => "custom",
+  :custom       => "^[\W]",
+  :group        => "4",
+  :recipes      => ['group_management::default']
+
+attribute 'group_management/base_users_to_remove',
   :display_name => "Users to remove from base groups",
   :description  => "List of users that will be remove from base groups",
   :type         => "array",
-  :default      => [],
+  :default      => "[]",
+  :recipes      => ['group_management::default']
+
+attribute 'group_management/base_users_to_remove/user',
+  :display_name => "User to remove from base groups",
+  :description  => "User will be remove from base groups",
+  :type         => "string",
+  :default      => "[]",
   :validation   => "custom",
   :custom       => "^[\W]",
+  :order        => "5",
   :recipes      => ['group_management::default']

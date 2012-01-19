@@ -22,19 +22,52 @@
 #
 require 'etc'
 
-node[:group_management].each do |grp_list,values|
-  node[:group_management][grp_list][:groups].each do |grp|
-    grp_members = Etc.getgrnam(grp).mem
-    grp_members = grp_members + node[:group_management][grp_list][:users_to_add]
-    unless grp_members.empty?
-      grp_members = grp_members - node[:group_management][grp_list][:users_to_remove]
-      grp_members.uniq!
-  
-      group grp do
-        action :manage
-        members grp_members
-        append false
-      end
+node[:group_management][:admin_groups].each do |grp|
+  grp_members = Etc.getgrnam(grp[:group]).mem
+  users_to_add = []
+  users_to_remove = []
+  node[:group_management][:admin_users_to_add].each do |user|
+    users_to_add << user[:user]
+  end
+  node[:group_management][:admin_users_to_remove].each do |user|
+    users_to_remove << user[:user]
+  end
+
+  grp_members = grp_members + users_to_add
+  unless grp_members.empty?
+    grp_members = grp_members - users_to_remove
+    grp_members.uniq!
+
+    group grp[:group] do
+      action :manage
+      members grp_members
+      append false
+    end
+  end
+end
+
+
+
+node[:group_management][:base_groups].each do |grp|
+  grp_members = Etc.getgrnam(grp[:group]).mem
+  users_to_add = []
+  users_to_remove = []
+  node[:group_management][:base_users_to_add].each do |user|
+    users_to_add << user[:user]
+  end
+  node[:group_management][:base_users_to_remove].each do |user|
+    users_to_remove << user[:user]
+  end
+
+  grp_members = grp_members + users_to_add
+  unless grp_members.empty?
+    grp_members = grp_members - users_to_remove
+    grp_members.uniq!
+
+    group grp[:group] do
+      action :manage
+      members grp_members
+      append false
     end
   end
 end
