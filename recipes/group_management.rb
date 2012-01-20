@@ -22,14 +22,17 @@
 #
 require 'etc'
 
-node[:group_management][:admin_groups].each do |grp|
+admin_groups=node[:group_management][:admin_groups].map{|x| x[1]}.flatten
+admin_groups.each do |grp|
   grp_members = Etc.getgrnam(grp[:group]).mem
   users_to_add = []
   users_to_remove = []
-  node[:group_management][:admin_users_to_add].each do |user|
+  admin_users_to_add=node[:group_management][:admin_users_to_add].map{|x| x[1]}.flatten
+  admin_users_to_add.each do |user|
     users_to_add << user[:user]
   end
-  node[:group_management][:admin_users_to_remove].each do |user|
+  admin_users_to_remove=node[:group_management][:admin_users_to_remove].map{|x| x[1]}.flatten
+  admin_users_to_remove.each do |user|
     users_to_remove << user[:user]
   end
 
@@ -47,15 +50,17 @@ node[:group_management][:admin_groups].each do |grp|
 end
 
 
-
-node[:group_management][:base_groups].each do |grp|
+base_groups=node[:group_management][:base_groups].map{|x| x[1]}.flatten
+base_groups.each do |grp|
   grp_members = Etc.getgrnam(grp[:group]).mem
   users_to_add = []
   users_to_remove = []
-  node[:group_management][:base_users_to_add].each do |user|
+  base_users_to_add=node[:group_management][:base_users_to_add].map{|x| x[1]}.flatten
+  base_users_to_add.each do |user|
     users_to_add << user[:user]
   end
-  node[:group_management][:base_users_to_remove].each do |user|
+  base_users_to_remove=node[:group_management][:base_users_to_remove].map{|x| x[1]}.flatten
+  base_users_to_remove.each do |user|
     users_to_remove << user[:user]
   end
 

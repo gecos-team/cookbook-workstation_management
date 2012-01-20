@@ -12,27 +12,11 @@ recipe            "group_management::group_management", "Add or Remove users fro
   supports os
 end
 
-attribute 'group_management/admin_groups',
-  :display_name => "Local admin groups",
-  :description  => "List of local admin groups",
-  :type         => "array",
-  :default      => "[{'group':'admin'},{'group':'adm'}]",
-  :recipes      => ['group_management::group_management']
-
-
-attribute 'group_management/admin_groups/group',
-  :display_name => "Local admin group",
-  :type         => "string",
-  :validation   => "custom",
-  :custom       => "^[\W]",
-  :order        => "0",
-  :recipes      => ['group_management::group_management']
 
 attribute 'group_management/admin_users_to_add',
   :display_name => "Users to add to admin groups",
   :description  => "List of users that will be added to admin groups",
   :type         => "array",
-  :default      => "[]",
   :recipes      => ['group_management::group_management']
 
 attribute 'group_management/admin_users_to_add/user',
@@ -40,15 +24,14 @@ attribute 'group_management/admin_users_to_add/user',
   :description  => "User will be added to admin groups",
   :type         => "string",
   :validation   => "custom",
-  :custom       => "^[\W]",
-  :order        => "1",
+  :custom       => "^([\w|\.])*$",
+  :order        => "0",
   :recipes      => ['group_management::group_management']
 
 attribute 'group_management/admin_users_to_remove',
   :display_name => "Users to remove from admin groups",
   :description  => "List of users that will be remove from admin groups",
   :type         => "array",
-  :default      => "[]",
   :recipes      => ['group_management::group_management']
 
 attribute 'group_management/admin_users_to_remove/user',
@@ -56,30 +39,15 @@ attribute 'group_management/admin_users_to_remove/user',
   :description  => "User will be remove from admin groups",
   :type         => "string",
   :validation   => "custom",
-  :custom       => "^[\W]",
-  :order        => "2",
+  :custom       => "^([\w|\.])*$",
+  :order        => "1",
   :recipes      => ['group_management::group_management']
 
-attribute 'group_management/base_groups',
-  :display_name => "Local base groups",
-  :description  => "List of local base groups",
-  :type         => "array",
-  :default      => "[{'group':'base'},{'group':'adm'}]",
-  :recipes      => ['group_management::group_management']
-
-attribute 'group_management/base_groups/group',
-  :display_name => "Local base group",
-  :type         => "string",
-  :validation   => "custom",
-  :custom       => "^[\W]",
-  :order        => "3",
-  :recipes      => ['group_management::group_management']
 
 attribute 'group_management/base_users_to_add',
   :display_name => "Users to add to base groups",
   :description  => "List of users that will be added to base groups",
   :type         => "array",
-  :default      => "[]",
   :recipes      => ['group_management::group_management']
 
 attribute 'group_management/base_users_to_add/user',
@@ -87,23 +55,21 @@ attribute 'group_management/base_users_to_add/user',
   :description  => "User will be added to base groups",
   :type         => "string",
   :validation   => "custom",
-  :custom       => "^[\W]",
-  :group        => "4",
+  :custom       => "^([\w|\.])*$",
+  :group        => "2",
   :recipes      => ['group_management::group_management']
 
 attribute 'group_management/base_users_to_remove',
   :display_name => "Users to remove from base groups",
   :description  => "List of users that will be remove from base groups",
   :type         => "array",
-  :default      => "[]",
   :recipes      => ['group_management::group_management']
 
 attribute 'group_management/base_users_to_remove/user',
   :display_name => "User to remove from base groups",
   :description  => "User will be remove from base groups",
   :type         => "string",
-  :default      => "[]",
   :validation   => "custom",
-  :custom       => "^[\W]",
-  :order        => "5",
+  :custom       => "^([\w|\.])*$",
+  :order        => "3",
   :recipes      => ['group_management::group_management']
