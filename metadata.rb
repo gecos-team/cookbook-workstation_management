@@ -23,8 +23,7 @@ attribute 'group_management/admin_users_to_add/user',
   :display_name => "User to add to admin groups",
   :description  => "User will be added to admin groups",
   :type         => "string",
-  :validation   => "custom",
-  :custom       => "^([\w|\.])*$",
+  :validation   => "alphanumericwithdots",
   :order        => "0",
   :recipes      => ['group_management::group_management']
 
@@ -38,8 +37,7 @@ attribute 'group_management/admin_users_to_remove/user',
   :display_name => "User to remove from admin groups",
   :description  => "User will be remove from admin groups",
   :type         => "string",
-  :validation   => "custom",
-  :custom       => "^([\w|\.])*$",
+  :validation   => "alphanumericwithdots",
   :order        => "1",
   :recipes      => ['group_management::group_management']
 
@@ -54,8 +52,7 @@ attribute 'group_management/base_users_to_add/user',
   :display_name => "User to add to base groups",
   :description  => "User will be added to base groups",
   :type         => "string",
-  :validation   => "custom",
-  :custom       => "^([\w|\.])*$",
+  :validation   => "alphanumericwithdots",
   :group        => "2",
   :recipes      => ['group_management::group_management']
 
@@ -69,7 +66,6 @@ attribute 'group_management/base_users_to_remove/user',
   :display_name => "User to remove from base groups",
   :description  => "User will be remove from base groups",
   :type         => "string",
-  :validation   => "custom",
-  :custom       => "^([\w|\.])*$",
+  :validation   => "alphanumericwithdots",
   :order        => "3",
   :recipes      => ['group_management::group_management']
