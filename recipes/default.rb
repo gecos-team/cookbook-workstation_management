@@ -1,12 +1,11 @@
 #
-# Cookbook Name:: group_management
+# Cookbook Name:: fixed_files
 # Recipe:: default
 #
 # Copyright 2011 Junta de Andalucía
 #
-# Authors::
-#  * David Amian Valle <damian@emergya.com>
-#  * Roberto C. Morano <rcmorano@emergya.com>
+# Author::
+#  * David Amian <damian@emergya.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
