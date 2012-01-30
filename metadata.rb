@@ -1,71 +1,74 @@
-name              "group_management"
-maintainer        "Roberto C. Morano"
-maintainer_email  "rcmorano@emergya.com"
+name              "fixed_files"
+maintainer        "David Amian"
+maintainer_email  "damian@emergya.com"
 license           "Apache 2.0"
-description       "Manage users in local groups"
+description       "Puts fiels in to clients in concrete path"
 version           "0.1.1"
 
-provides          "group_management::group_management"
-recipe            "group_management::group_management", "Add or Remove users from given groups lists"
+recipe            "fixed_files::fixed_files", "Puts fiels in to clients in concrete path"
 
-%w{ redhat centos fedora ubuntu debian }.each do |os|
+%w{ ubuntu debian }.each do |os|
   supports os
 end
 
-
-attribute 'group_management/admin_users_to_add',
-  :display_name => "Users to add to admin groups",
-  :description  => "List of users that will be added to admin groups",
+attribute 'fixed_files/fixed_files',
+  :display_name => "Fixed Files",
+  :description  => "List of fixed files",
   :type         => "array",
-  :recipes      => ['group_management::group_management']
-
-attribute 'group_management/admin_users_to_add/user',
-  :display_name => "User to add to admin groups",
-  :description  => "User will be added to admin groups",
+  :required     => "required",
+  :recipes      => [ 'fixed_files::fixed_files' ]
+  
+attribute 'fixed_files/fixed_files/file_url',
+  :display_name => "File Url",
+  :description  => "Url that contains the fixed file",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :required     => "required",
+  :validation   => "url",
   :order        => "0",
-  :recipes      => ['group_management::group_management']
+  :recipes      => [ 'fixed_files::fixed_files' ]
 
-attribute 'group_management/admin_users_to_remove',
-  :display_name => "Users to remove from admin groups",
-  :description  => "List of users that will be remove from admin groups",
-  :type         => "array",
-  :recipes      => ['group_management::group_management']
-
-attribute 'group_management/admin_users_to_remove/user',
-  :display_name => "User to remove from admin groups",
-  :description  => "User will be remove from admin groups",
+attribute 'fixed_files/fixed_files/path_client',
+  :display_name => "Path client",
+  :description  => "Path to set fixed file in to the client",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :required     => "required",
+  :validation   => "abspath",
   :order        => "1",
-  :recipes      => ['group_management::group_management']
+  :recipes      => [ 'fixed_files::fixed_files' ]
 
-
-attribute 'group_management/base_users_to_add',
-  :display_name => "Users to add to base groups",
-  :description  => "List of users that will be added to base groups",
-  :type         => "array",
-  :recipes      => ['group_management::group_management']
-
-attribute 'group_management/base_users_to_add/user',
-  :display_name => "User to add to base groups",
-  :description  => "User will be added to base groups",
+attribute 'fixed_files/fixed_files/user',
+  :display_name => "Own",
+  :description  => "File's owner username",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
-  :group        => "2",
-  :recipes      => ['group_management::group_management']
+  :required     => "required",
+  :wizard       => "users",
+  :order        => "2",
+  :recipes      => [ 'fixed_files::fixed_files' ]
 
-attribute 'group_management/base_users_to_remove',
-  :display_name => "Users to remove from base groups",
-  :description  => "List of users that will be remove from base groups",
-  :type         => "array",
-  :recipes      => ['group_management::group_management']
-
-attribute 'group_management/base_users_to_remove/user',
-  :display_name => "User to remove from base groups",
-  :description  => "User will be remove from base groups",
+attribute 'fixed_files/fixed_files/group',
+  :display_name => "Owner group",
+  :description  => "File's owner group",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :required     => "required",
+  :wizard       => "groups",
   :order        => "3",
-  :recipes      => ['group_management::group_management']
+  :recipes      => [ 'fixed_files::fixed_files' ]
+
+attribute 'fixed_files/fixed_files/mode',
+  :display_name => "Mode",
+  :description  => "Mode of file (in e.g 0775)",
+  :type         => "string",
+  :required     => "required",
+  :validation   => "modefile",
+  :order        => "4",
+  :recipes      => [ 'fixed_files::fixed_files' ]
+
+attribute 'fixed_files/fixed_files/override',
+  :display_name => "Override",
+  :description  => "Create the file locally only if the file doesn't yet exist",
+  :type         => "string",
+  :required     => "required",
+  :choice       => [ "true", "false" ],
+  :order        => "5",
+  :recipes      => [ 'fixed_files::fixed_files' ]
+

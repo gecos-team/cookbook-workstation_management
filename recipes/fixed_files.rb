@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: fixed_files
-# Recipe:: default
+# Recipe:: fixed_files
 #
 # Copyright 2011 Junta de Andalucía
 #
@@ -19,3 +19,29 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+fixed_files = node["fixed_files"]["fixed_files"].map{|x| x[1]}.flatten
+
+fixed_files.each do |fixedfile|
+  path_client = fixedfile["path_client"]
+  file_url = fixedfile["file_url"]
+  override = fixedfile["override"]
+  if override == 'true'
+    remote_file path_client do
+      source file_url
+      owner fixedfile["user"]
+      mode fixedfile["mode"]
+      group fixedfile["group"]
+    end  
+  else
+    remote_file path_client do
+      source file_url
+      owner fixedfile["user"]
+      mode fixedfile["mode"]
+      group fixedfile["group"]
+      action :create_if_missing
+    end  
+  end
+end
+
+
