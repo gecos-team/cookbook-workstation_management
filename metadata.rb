@@ -78,6 +78,22 @@ attribute 'fixed_files/create_files/override',
   :order        => "5",
   :recipes      => [ 'workstation_management::create_files' ]
 
+attribute 'fixed_files/remove_files',
+  :display_name => "Remove Files",
+  :description  => "List of files",
+  :type         => "array",
+  :required     => "required",
+  :recipes      => [ 'workstation_management::remove_files' ]
+
+attribute 'fixed_files/remove_files/file_path',
+  :display_name => "File Path",
+  :description  => "Path that contains the file",
+  :type         => "string",
+  :required     => "required",
+  :validation   => "abspath",
+  :order        => "0",
+  :recipes      => [ 'workstation_management::remove_files' ]
+
 
 attribute 'group_management/admin_users_to_add',
   :display_name => "Users to add to admin groups",
