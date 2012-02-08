@@ -16,3 +16,10 @@ default[:group_management][:base_groups]['9'][:group] = 'fuse'
 default[:group_management][:base_groups]['10'][:group] = 'sambashare'
 default[:group_management][:base_users_to_add] = []
 default[:group_management][:base_users_to_remove] = []
+
+default[:network_management][:ip_address] = ''
+default[:network_management][:gateway] = ''
+default[:network_management][:netmask] = ''
+default[:network_management][:dns_servers] = []
+default[:network_management][:conn_type] = ''
+default[:network_management][:dhcp] = ''
