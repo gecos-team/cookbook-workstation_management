@@ -67,8 +67,19 @@ end
 
 if node["network_management"]["conn_type"] == 'wired'
   if node["network_management"]["dhcp"] == 'true'
-    nm_conn_files.each do |conn_file|
-      FileUtils.mv conn_file, nm_conn_backup_dir
+    unless nm_conn_files.empty?
+      nm_conn_files.each do |conn_file|
+        FileUtils.mv conn_file, nm_conn_backup_dir
+        template conn_file do
+          owner "root"
+          group "root"
+          mode 0600
+          variables (:mac_address => nm_macaddress)
+          source nm_wired_dhcp_conn_source
+        end
+      end
+    else
+      conn_file = "/etc/NetworkManager/system-connections/chef-managed-connection"
       template conn_file do
         owner "root"
         group "root"
@@ -80,8 +91,23 @@ if node["network_management"]["conn_type"] == 'wired'
   else
     netmask_int = NetAddr.netmask_to_i(node["network_management"]["netmask"])
     netmask = NetAddr.i_to_bits(netmask_int)
-    nm_conn_files.each do |conn_file|
-      FileUtils.mv conn_file, nm_conn_backup_dir
+    unless nm_conn_files.empty?
+      nm_conn_files.each do |conn_file|
+        FileUtils.mv conn_file, nm_conn_backup_dir
+        template conn_file do
+          owner "root"
+          group "root"
+          mode 0600
+          variables (:dns_servers => dns_servers,
+                     :mac_address => nm_macaddress,
+                     :ip_address => node["network_management"]["ip_address"],
+                     :netmask => netmask,
+                     :gateway => node["network_management"]["gateway"])
+          source nm_wired_static_ip_conn_source
+        end
+      end
+    else
+      conn_file = "/etc/NetworkManager/system-connections/chef-managed-connection"
       template conn_file do
         owner "root"
         group "root"
