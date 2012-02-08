@@ -103,6 +103,7 @@ attribute 'group_management/admin_groups',
   :display_name => "Administrator groups",
   :description  => "List of groups for administration purposes that users will be added or removed to",
   :type         => "array",
+  :default      => [ { 'name' => 'admin' } , { 'name' => 'adm' } ],
   :recipes      => ['workstation_management::group_management']
 
 attribute 'group_management/admin_groups/name',
