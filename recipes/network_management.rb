@@ -59,9 +59,9 @@ end
 dns_servers = ""
 node["network_management"]["dns_servers"].each do |server|
   if dns_servers.empty?
-    dns_servers = server["ip"] + ";"
+    dns_servers = server["ip"] + ";" unless server["ip"].empty?
   else
-    dns_servers = dns_servers + server["ip"] + ";"
+    dns_servers = dns_servers + server["ip"] + ";" unless server["ip"].empty?
   end
 end
 
