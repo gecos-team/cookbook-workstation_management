@@ -151,7 +151,6 @@ attribute 'group_management/extra_groups',
   :display_name => "Extra groups",
   :description  => "List of extra groups that users will be added or removed to",
   :type         => "array",
-  :default      => [],
   :recipes      => ['workstation_management::extra_groups']
 
 attribute 'group_management/extra_groups/name',
