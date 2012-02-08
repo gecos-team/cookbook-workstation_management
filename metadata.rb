@@ -127,33 +127,33 @@ attribute 'group_management/admin_users_to_remove/user',
   :recipes      => ['workstation_management::group_management']
 
 
-attribute 'group_management/base_users_to_add',
-  :display_name => "Users to add to base groups",
-  :description  => "List of users that will be added to base groups",
-  :type         => "array",
-  :recipes      => ['workstation_management::group_management']
-
-attribute 'group_management/base_users_to_add/user',
-  :display_name => "User to add to base groups",
-  :description  => "User to add to base groups",
-  :type         => "string",
-  :validation   => "alphanumericwithdots",
-  :group        => "2",
-  :recipes      => ['workstation_management::group_management']
-
-attribute 'group_management/base_users_to_remove',
-  :display_name => "Users to remove from base groups",
-  :description  => "List of users that will be remove from base groups",
-  :type         => "array",
-  :recipes      => ['workstation_management::group_management']
-
-attribute 'group_management/base_users_to_remove/user',
-  :display_name => "User to remove from base groups",
-  :description  => "User to remove from base groups",
-  :type         => "string",
-  :validation   => "alphanumericwithdots",
-  :order        => "3",
-  :recipes      => ['workstation_management::group_management']
+#attribute 'group_management/base_users_to_add',
+#  :display_name => "Users to add to base groups",
+#  :description  => "List of users that will be added to base groups",
+#  :type         => "array",
+#  :recipes      => ['workstation_management::group_management']
+#
+#attribute 'group_management/base_users_to_add/user',
+#  :display_name => "User to add to base groups",
+#  :description  => "User to add to base groups",
+#  :type         => "string",
+#  :validation   => "alphanumericwithdots",
+#  :group        => "2",
+#  :recipes      => ['workstation_management::group_management']
+#
+#attribute 'group_management/base_users_to_remove',
+#  :display_name => "Users to remove from base groups",
+#  :description  => "List of users that will be remove from base groups",
+#  :type         => "array",
+#  :recipes      => ['workstation_management::group_management']
+#
+#attribute 'group_management/base_users_to_remove/user',
+#  :display_name => "User to remove from base groups",
+#  :description  => "User to remove from base groups",
+#  :type         => "string",
+#  :validation   => "alphanumericwithdots",
+#  :order        => "3",
+#  :recipes      => ['workstation_management::group_management']
 
 attribute 'network_management/conn_type',
   :display_name => "Connection type",
