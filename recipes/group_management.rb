@@ -32,12 +32,12 @@ admin_groups.each do |grp|
 
   admin_users_to_add = node[:group_management][:admin_users_to_add]
   admin_users_to_add.each do |user|
-    users_to_add << user[:user]
+    users_to_add << user["user"] unless user["user"].empty?
   end
 
   admin_users_to_remove=node[:group_management][:admin_users_to_remove]
   admin_users_to_remove.each do |user|
-    users_to_remove << user[:user]
+    users_to_remove << user["user"] unless user["user"].empty?
   end
 
   grp_members = grp_members + users_to_add
@@ -45,7 +45,7 @@ admin_groups.each do |grp|
     grp_members = grp_members - users_to_remove
     grp_members.uniq!
 
-    group grp[:group] do
+    group grp["name"] do
       action :manage
       members grp_members
       append false
