@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: fixed_files
-# Recipe:: create_files
+# Recipe:: file_copy
 #
 # Copyright 2011 Junta de Andalucía
 #
@@ -20,12 +20,11 @@
 # limitations under the License.
 #
 
-files = node["fixed_files"]["create_files"].map{|x| x[1]}.flatten
 
-files.each do |fixedfile|
+node["file_copy"]["file_copy"].each do |fixedfile|
   path_client = fixedfile["path_client"]
   file_url = fixedfile["file_url"]
-  override = fixedfile["override"]
+  overwrite = fixedfile["overwrite"]
   if override == 'true'
     remote_file path_client do
       source file_url
