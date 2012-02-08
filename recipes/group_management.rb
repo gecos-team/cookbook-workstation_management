@@ -48,31 +48,3 @@ admin_groups.each do |grp|
     end
   end
 end
-
-
-base_groups=node[:group_management][:base_groups].map{|x| x[1]}.flatten
-base_groups.each do |grp|
-  grp_members = Etc.getgrnam(grp[:group]).mem
-  users_to_add = []
-  users_to_remove = []
-  base_users_to_add=node[:group_management][:base_users_to_add].map{|x| x[1]}.flatten
-  base_users_to_add.each do |user|
-    users_to_add << user[:user]
-  end
-  base_users_to_remove=node[:group_management][:base_users_to_remove].map{|x| x[1]}.flatten
-  base_users_to_remove.each do |user|
-    users_to_remove << user[:user]
-  end
-
-  grp_members = grp_members + users_to_add
-  unless grp_members.empty?
-    grp_members = grp_members - users_to_remove
-    grp_members.uniq!
-
-    group grp[:group] do
-      action :manage
-      members grp_members
-      append false
-    end
-  end
-end
