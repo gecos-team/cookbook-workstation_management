@@ -25,7 +25,7 @@ node["file_copy"]["file_copy"].each do |fixedfile|
   path_client = fixedfile["path_client"]
   file_url = fixedfile["file_url"]
   overwrite = fixedfile["overwrite"]
-  if override == 'true'
+  if overwrite == 'true'
     remote_file path_client do
       source file_url
       owner fixedfile["user"]
