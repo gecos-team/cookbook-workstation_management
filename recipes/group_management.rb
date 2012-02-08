@@ -22,16 +22,20 @@
 #
 require 'etc'
 
-admin_groups=node[:group_management][:admin_groups].map{|x| x[1]}.flatten
+admin_groups = node[:group_management][:admin_groups]
+
 admin_groups.each do |grp|
-  grp_members = Etc.getgrnam(grp[:group]).mem
+  grp_members = Etc.getgrnam(grp["name"]).mem
+
   users_to_add = []
   users_to_remove = []
-  admin_users_to_add=node[:group_management][:admin_users_to_add].map{|x| x[1]}.flatten
+
+  admin_users_to_add = node[:group_management][:admin_users_to_add]
   admin_users_to_add.each do |user|
     users_to_add << user[:user]
   end
-  admin_users_to_remove=node[:group_management][:admin_users_to_remove].map{|x| x[1]}.flatten
+
+  admin_users_to_remove=node[:group_management][:admin_users_to_remove]
   admin_users_to_remove.each do |user|
     users_to_remove << user[:user]
   end
