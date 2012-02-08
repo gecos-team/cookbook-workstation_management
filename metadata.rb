@@ -6,8 +6,13 @@ description       "Cookbook that provides recipes for GECOS workstations adminis
 version           "0.1.1"
 
 
-provides          "workstation_management::group_management"
-recipe            "workstation_management::group_management", "Add or Remove users from given groups lists"
+provides          "workstation_management::admin_groups"
+recipe            "workstation_management::admin_groups", "Add or Remove users from given administrators groups lists"
+
+provides          "workstation_management::extra_groups"
+recipe            "workstation_management::extra_groups", "Add or Remove users from given groups lists"
+
+
 
 provides            "workstation_management::create_files"
 provides            "workstation_management::remove_files"
@@ -104,7 +109,7 @@ attribute 'group_management/admin_groups',
   :description  => "List of groups for administration purposes that users will be added or removed to",
   :type         => "array",
   :default      => [ { 'name' => 'admin' } , { 'name' => 'adm' } ],
-  :recipes      => ['workstation_management::group_management']
+  :recipes      => ['workstation_management::admin_groups']
 
 attribute 'group_management/admin_groups/name',
   :display_name => "Group name",
@@ -112,13 +117,13 @@ attribute 'group_management/admin_groups/name',
   :type         => "string",
   :validation   => "alphanumericwithdots",
   :order        => "0",
-  :recipes      => ['workstation_management::group_management']
+  :recipes      => ['workstation_management::admin_groups']
 
 attribute 'group_management/admin_users_to_add',
   :display_name => "Users to add to admin groups",
   :description  => "List of users that will be added to admin groups",
   :type         => "array",
-  :recipes      => ['workstation_management::group_management']
+  :recipes      => ['workstation_management::admin_groups']
 
 attribute 'group_management/admin_users_to_add/user',
   :display_name => "User to add to admin groups",
@@ -126,13 +131,13 @@ attribute 'group_management/admin_users_to_add/user',
   :type         => "string",
   :validation   => "alphanumericwithdots",
   :order        => "1",
-  :recipes      => ['workstation_management::group_management']
+  :recipes      => ['workstation_management::admin_groups']
 
 attribute 'group_management/admin_users_to_remove',
   :display_name => "Users to be removed from admin groups",
   :description  => "List of users that will be removed from admin groups",
   :type         => "array",
-  :recipes      => ['workstation_management::group_management']
+  :recipes      => ['workstation_management::admin_groups']
 
 attribute 'group_management/admin_users_to_remove/user',
   :display_name => "User to remove from admin groups",
@@ -140,9 +145,50 @@ attribute 'group_management/admin_users_to_remove/user',
   :type         => "string",
   :validation   => "alphanumericwithdots",
   :order        => "2",
-  :recipes      => ['workstation_management::group_management']
+  :recipes      => ['workstation_management::admin_groups']
 
+attribute 'group_management/extra_groups',
+  :display_name => "Extra groups",
+  :description  => "List of extra groups that users will be added or removed to",
+  :type         => "array",
+  :default      => [],
+  :recipes      => ['workstation_management::extra_groups']
 
+attribute 'group_management/extra_groups/name',
+  :display_name => "Group name",
+  :description  => "Group name",
+  :type         => "string",
+  :validation   => "alphanumericwithdots",
+  :order        => "0",
+  :recipes      => ['workstation_management::extra_groups']
+
+attribute 'group_management/extra_users_to_add',
+  :display_name => "Users to add to extra groups",
+  :description  => "List of users that will be added to extra groups",
+  :type         => "array",
+  :recipes      => ['workstation_management::extra_groups']
+
+attribute 'group_management/extra_users_to_add/user',
+  :display_name => "User to add to extra groups",
+  :description  => "User will be added to extra groups",
+  :type         => "string",
+  :validation   => "alphanumericwithdots",
+  :order        => "1",
+  :recipes      => ['workstation_management::extra_groups']
+
+attribute 'group_management/extra_users_to_remove',
+  :display_name => "Users to be removed from extra groups",
+  :description  => "List of users that will be removed from extra groups",
+  :type         => "array",
+  :recipes      => ['workstation_management::extra_groups']
+
+attribute 'group_management/extra_users_to_remove/user',
+  :display_name => "User to remove from extra groups",
+  :description  => "User to remove from extra groups",
+  :type         => "string",
+  :validation   => "alphanumericwithdots",
+  :order        => "2",
+  :recipes      => ['workstation_management::extra_groups']
 
 #attribute 'group_management/base_users_to_add',
 #  :display_name => "Users to add to base groups",
