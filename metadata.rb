@@ -126,6 +126,20 @@ attribute 'group_management/admin_users_to_remove/user',
   :order        => "1",
   :recipes      => ['workstation_management::group_management']
 
+attribute 'group_management/admin_groups',
+  :display_name => "Administrator groups",
+  :description  => "List of groups for administration purposes that users will be added or removed to",
+  :type         => "array",
+  :recipes      => ['workstation_management::group_management']
+
+attribute 'group_management/admin_groups/name',
+  :display_name => "Group name",
+  :description  => "Administration purpose group's name",
+  :type         => "string",
+  :validation   => "alphanumericwithdots",
+  :order        => "1",
+  :recipes      => ['workstation_management::group_management']
+
 
 #attribute 'group_management/base_users_to_add',
 #  :display_name => "Users to add to base groups",
