@@ -22,9 +22,8 @@
 
 def remove_files()
 
-  files = node["fixed_files"]["remove_files"].map{|x| x[1]}.flatten
 
-  files.each do |file|
+  node["file_delete"]["file_delete"].each do |file|
 
     file_path = file['file_path']
 

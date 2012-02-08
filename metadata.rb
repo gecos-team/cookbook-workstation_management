@@ -14,10 +14,10 @@ recipe            "workstation_management::extra_groups", "Add or Remove users f
 
 
 
-provides            "workstation_management::create_files"
-provides            "workstation_management::remove_files"
-recipe            "workstation_management::create_files", "Copy remote files to the Chef node."
-recipe            "workstation_management::remove_files", "Remove local files of the Chef node."
+provides            "workstation_management::file_copy"
+provides            "workstation_management::file_delete"
+recipe            "workstation_management::file_copy", "Copy remote files to the Chef node."
+recipe            "workstation_management::file_delete", "Remove local files of the Chef node."
 
 provides            "workstation_management::network_management"
 recipe            "workstation_management::network_management", "Set network configuration"
@@ -26,82 +26,82 @@ recipe            "workstation_management::network_management", "Set network con
   supports os
 end
 
-attribute 'fixed_files/create_files',
+attribute 'file_copy/file_copy',
   :display_name => "Create Files",
   :description  => "List of files",
   :type         => "array",
   :required     => "required",
-  :recipes      => [ 'workstation_management::create_files' ]
+  :recipes      => [ 'workstation_management::file_copy' ]
   
-attribute 'fixed_files/create_files/file_url',
+attribute 'file_copy/file_copy/file_url',
   :display_name => "File URL",
   :description  => "URL of the original file",
   :type         => "string",
   :required     => "required",
   :validation   => "url",
   :order        => "0",
-  :recipes      => [ 'workstation_management::create_files' ]
+  :recipes      => [ 'workstation_management::file_copy' ]
 
-attribute 'fixed_files/create_files/path_client',
+attribute 'file_copy/file_copy/path_client',
   :display_name => "Destination path",
   :description  => "Destination path in the workstation",
   :type         => "string",
   :required     => "required",
   :validation   => "abspath",
   :order        => "1",
-  :recipes      => [ 'workstation_management::create_files' ]
+  :recipes      => [ 'workstation_management::file_copy' ]
 
-attribute 'fixed_files/create_files/user',
+attribute 'file_copy/file_copy/user',
   :display_name => "Owner user",
   :description  => "File's owner username",
   :type         => "string",
   :required     => "required",
   :wizard       => "users",
   :order        => "2",
-  :recipes      => [ 'workstation_management::create_files' ]
+  :recipes      => [ 'workstation_management::file_copy' ]
 
-attribute 'fixed_files/create_files/group',
+attribute 'file_copy/file_copy/group',
   :display_name => "Owner group",
   :description  => "File's owner group",
   :type         => "string",
   :required     => "required",
   :wizard       => "groups",
   :order        => "3",
-  :recipes      => [ 'workstation_management::create_files' ]
+  :recipes      => [ 'workstation_management::file_copy' ]
 
-attribute 'fixed_files/create_files/mode',
+attribute 'file_copy/file_copy/mode',
   :display_name => "Mode",
   :description  => "Mode of file (example: 0775)",
   :type         => "string",
   :required     => "required",
   :validation   => "modefile",
   :order        => "4",
-  :recipes      => [ 'workstation_management::create_files' ]
+  :recipes      => [ 'workstation_management::file_copy' ]
 
-attribute 'fixed_files/create_files/override',
+attribute 'file_copy/file_copy/overwrite',
   :display_name => "Overwrite",
   :description  => "Copy this file even if it already existed",
   :type         => "string",
   :required     => "required",
   :choice       => [ "true", "false" ],
   :order        => "5",
-  :recipes      => [ 'workstation_management::create_files' ]
+  :recipes      => [ 'workstation_management::file_copy' ]
 
-attribute 'fixed_files/remove_files',
+attribute 'file_delete/file_delete',
   :display_name => "Remove Files",
   :description  => "List of files to delete",
   :type         => "array",
   :required     => "required",
-  :recipes      => [ 'workstation_management::remove_files' ]
+  :recipes      => [ 'workstation_management::file_delete' ]
 
-attribute 'fixed_files/remove_files/file_path',
+attribute 'file_delete/file_delete/file_path',
   :display_name => "File Path",
   :description  => "Full path of  the file to delete",
   :type         => "string",
   :required     => "required",
   :validation   => "abspath",
   :order        => "0",
-  :recipes      => [ 'workstation_management::remove_files' ]
+  :recipes      => [ 'workstation_management::file_delete' ]
 
 
 attribute 'group_management/admin_groups',
