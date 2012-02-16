@@ -1,7 +1,7 @@
 # Groups list definition
-default[:group_management][:admin_groups] = [ { 'name' => 'admin' } , { 'name' => 'adm' } ]
-default[:group_management][:admin_users_to_add] = []
-default[:group_management][:admin_users_to_remove] = [] 
+default["local_administrators"]["admin_groups"] = [ { 'name' => 'admin' } , { 'name' => 'adm' } ]
+default["local_administrators"]["admin_users_to_add"] = []
+default["local_administrators"]["admin_users_to_remove"] = [] 
 
 default[:group_management][:extra_groups] = []
 default[:group_management][:extra_users_to_add] = []

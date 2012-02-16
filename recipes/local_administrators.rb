@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: workstation_management
-# Recipe:: extra_groups
+# Recipe:: admin_groups
 #
 # Copyright 2011 Junta de Andalucía
 #
@@ -22,7 +22,7 @@
 #
 require 'etc'
 
-admin_groups = node[:group_management][:extra_groups]
+admin_groups = node["local_administrators"]["admin_groups"]
 
 admin_groups.each do |grp|
   if !grp["name"].empty?
@@ -31,12 +31,12 @@ admin_groups.each do |grp|
     users_to_add = []
     users_to_remove = []
   
-    admin_users_to_add = node[:group_management][:extra_users_to_add]
+    admin_users_to_add = node["local_administrators"]["admin_users_to_add"]
     admin_users_to_add.each do |user|
       users_to_add << user["user"] unless user["user"].empty?
     end
   
-    admin_users_to_remove=node[:group_management][:extra_users_to_remove]
+    admin_users_to_remove=node["local_administrators"]["admin_users_to_remove"]
     admin_users_to_remove.each do |user|
       users_to_remove << user["user"] unless user["user"].empty?
     end

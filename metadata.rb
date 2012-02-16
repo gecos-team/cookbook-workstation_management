@@ -6,8 +6,8 @@ description       "Cookbook that provides recipes for GECOS workstations adminis
 version           "0.1.1"
 
 
-provides          "workstation_management::admin_groups"
-recipe            "workstation_management::admin_groups", "Add or Remove users from given administrators groups lists"
+provides          "workstation_management::local_administrators"
+recipe            "workstation_management::local_administrators", "Add or Remove users from given administrators groups lists"
 
 provides          "workstation_management::extra_groups"
 recipe            "workstation_management::extra_groups", "Add or Remove users from given groups lists"
@@ -104,48 +104,48 @@ attribute 'file_delete/file_delete/file_path',
   :recipes      => [ 'workstation_management::file_delete' ]
 
 
-attribute 'group_management/admin_groups',
+attribute 'local_administrators/admin_groups',
   :display_name => "Administrator groups",
   :description  => "List of groups for administration purposes that users will be added or removed to",
   :type         => "array",
   :default      => [ { 'name' => 'admin' } , { 'name' => 'adm' } ],
-  :recipes      => ['workstation_management::admin_groups']
+  :recipes      => ['workstation_management::local_administrators']
 
-attribute 'group_management/admin_groups/name',
+attribute 'local_administrators/admin_groups/name',
   :display_name => "Group name",
   :description  => "Administration purpose group's name",
   :type         => "string",
   :validation   => "alphanumericwithdots",
   :order        => "0",
-  :recipes      => ['workstation_management::admin_groups']
+  :recipes      => ['workstation_management::local_administrators']
 
-attribute 'group_management/admin_users_to_add',
+attribute 'local_administrators/admin_users_to_add',
   :display_name => "Users to add to admin groups",
   :description  => "List of users that will be added to admin groups",
   :type         => "array",
-  :recipes      => ['workstation_management::admin_groups']
+  :recipes      => ['workstation_management::local_administrators']
 
-attribute 'group_management/admin_users_to_add/user',
+attribute 'local_administrators/admin_users_to_add/user',
   :display_name => "User to add to admin groups",
   :description  => "User will be added to admin groups",
   :type         => "string",
   :validation   => "alphanumericwithdots",
   :order        => "1",
-  :recipes      => ['workstation_management::admin_groups']
+  :recipes      => ['workstation_management::local_administrators']
 
-attribute 'group_management/admin_users_to_remove',
+attribute 'local_administrators/admin_users_to_remove',
   :display_name => "Users to be removed from admin groups",
   :description  => "List of users that will be removed from admin groups",
   :type         => "array",
-  :recipes      => ['workstation_management::admin_groups']
+  :recipes      => ['workstation_management::local_administrators']
 
-attribute 'group_management/admin_users_to_remove/user',
+attribute 'local_administrators/admin_users_to_remove/user',
   :display_name => "User to remove from admin groups",
   :description  => "User to remove from admin groups",
   :type         => "string",
   :validation   => "alphanumericwithdots",
   :order        => "2",
-  :recipes      => ['workstation_management::admin_groups']
+  :recipes      => ['workstation_management::local_administrators']
 
 attribute 'group_management/extra_groups',
   :display_name => "Extra groups",
