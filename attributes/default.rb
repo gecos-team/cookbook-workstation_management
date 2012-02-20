@@ -14,3 +14,5 @@ default[:network_management][:netmask] = ''
 default[:network_management][:dns_servers] = []
 default[:network_management][:conn_type] = 'wired'
 default[:network_management][:dhcp] = 'true'
+
+default[:ntp_sync][:server] = 'hora.rediris.es'

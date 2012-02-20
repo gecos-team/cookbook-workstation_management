@@ -22,6 +22,10 @@ recipe            "workstation_management::file_delete", "Remove local files of 
 provides            "workstation_management::network_management"
 recipe            "workstation_management::network_management", "Set network configuration"
 
+provides            "workstation_management::ntp_sync"
+recipe            "workstation_management::ntp_sync", "Set ntp synchronization"
+
+
 %w{ ubuntu debian }.each do |os|
   supports os
 end
@@ -282,4 +286,14 @@ attribute 'network_management/dns_servers/ip',
   :default      => "",
   :order        => "5",
   :recipes      => [ 'workstation_management::network_management' ]
+
+attribute 'ntp_sync/server',
+  :display_name => "NTP Server",
+  :description  => "Sets the ntp server that will be used for time synchronization",
+  :type         => "string",
+  :validation   => "alphanumericwithdots",
+  :required     => "required",
+  :default      => "hora.juntadeandalucia.es",
+  :order        => "0",
+  :recipes      => [ 'workstation_management::ntp_sync' ]
 
