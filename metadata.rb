@@ -288,7 +288,7 @@ attribute 'network_management/dns_servers/ip',
   :recipes      => [ 'workstation_management::network_management' ]
 
 attribute 'ntp_sync/server',
-  :display_name => "NTP Server",
+  :display_name => "NTP Server hostname/IP",
   :description  => "Sets the ntp server that will be used for time synchronization",
   :type         => "string",
   :validation   => "alphanumericwithdots",
