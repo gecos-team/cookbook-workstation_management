@@ -24,9 +24,13 @@ package 'ntpdate' do
   action :nothing
 end.run_action(:install)
 
-unless node['ntp_sync']['server'].nil?
-  execute "ntpdate" do
-    command "ntpdate -u #{node['ntp_sync']['server']}"
-    action :run
+begin
+  unless node['ntp_sync']['server'].nil?
+    execute "ntpdate" do
+      command "ntpdate -u #{node['ntp_sync']['server']}"
+      action :run
+    end
   end
+rescue Exception => e
+  Chef::Log.warn(e)
 end
