@@ -36,10 +36,16 @@ require 'netaddr'
 require 'fileutils'
 
 nm_conn_backup_dir = '/etc/NetworkManager/system-connections/chef-backups'
+nm_conn_production_dir = '/etc/NetworkManager/system-connections/chef-conns'
 
 unless Kernel::test('d', nm_conn_backup_dir)
   FileUtils.mkdir nm_conn_backup_dir
 end
+
+unless Kernel::test('d', nm_conn_production_dir)
+  FileUtils.mkdir nm_conn_production_dir
+end
+
 
 nm_wired_dhcp_conn_source = 'wired-dhcp-conn.erb'
 nm_wired_static_ip_conn_source = 'wired-static-ip-conn.erb'
@@ -59,9 +65,9 @@ end
 dns_servers = ""
 node["network_management"]["dns_servers"].each do |server|
   if dns_servers.empty?
-    dns_servers = server["ip"] + ";" unless server["ip"].empty?
+    dns_servers = server + ";" unless server.empty?
   else
-    dns_servers = dns_servers + server["ip"] + ";" unless server["ip"].empty?
+    dns_servers = dns_servers + server + ";" unless server.empty?
   end
 end
 
@@ -69,8 +75,9 @@ if node["network_management"]["conn_type"] == 'wired'
   if node["network_management"]["dhcp"] == 'true'
     unless nm_conn_files.empty?
       nm_conn_files.each do |conn_file|
-        FileUtils.mv conn_file, nm_conn_backup_dir
-        template conn_file do
+        FileUtils.cp conn_file, nm_conn_backup_dir
+        template_name = nm_conn_production_dir + "/" + File.basename(conn_file)
+        template template_name do
           owner "root"
           group "root"
           mode 0600
@@ -79,7 +86,7 @@ if node["network_management"]["conn_type"] == 'wired'
         end
       end
     else
-      conn_file = "/etc/NetworkManager/system-connections/chef-managed-connection"
+      conn_file = "/etc/NetworkManager/system-connections/chef-conns/chef-managed-connection"
       template conn_file do
         owner "root"
         group "root"
@@ -93,8 +100,9 @@ if node["network_management"]["conn_type"] == 'wired'
     netmask = NetAddr.i_to_bits(netmask_int)
     unless nm_conn_files.empty?
       nm_conn_files.each do |conn_file|
-        FileUtils.mv conn_file, nm_conn_backup_dir
-        template conn_file do
+        FileUtils.cp conn_file, nm_conn_backup_dir
+        template_name = nm_conn_production_dir + "/" + File.basename(conn_file)
+        template template_name do
           owner "root"
           group "root"
           mode 0600
@@ -107,7 +115,7 @@ if node["network_management"]["conn_type"] == 'wired'
         end
       end
     else
-      conn_file = "/etc/NetworkManager/system-connections/chef-managed-connection"
+      conn_file = "/etc/NetworkManager/system-connections/chef-conns/chef-managed-connection"
       template conn_file do
         owner "root"
         group "root"
@@ -123,4 +131,11 @@ if node["network_management"]["conn_type"] == 'wired'
   end
 #else
 
+end
+
+
+cookbook_file "/etc/init/gecos-nm.conf" do
+  source "gecos-nm.conf" 
+  mode "0644"
+  backup false
 end
