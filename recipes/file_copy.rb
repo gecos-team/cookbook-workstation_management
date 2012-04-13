@@ -26,20 +26,33 @@ node["file_copy"]["file_copy"].each do |fixedfile|
   file_url = fixedfile["file_url"]
   overwrite = fixedfile["overwrite"]
   if overwrite == 'true'
-    remote_file path_client do
-      source file_url
-      owner fixedfile["user"]
-      mode fixedfile["mode"]
-      group fixedfile["group"]
-    end  
+    begin
+      grp_members = Etc.getgrnam(fixedfile["group"]).mem
+      remote_file path_client do
+        source file_url
+        owner fixedfile["user"]
+        mode fixedfile["mode"]
+        group fixedfile["group"]
+      end
+    rescue ArgumentError => e
+      puts 'Group ' + fixedfile["group"] +' doesn\'t exist'
+      
+    end
   else
-    remote_file path_client do
-      source file_url
-      owner fixedfile["user"]
-      mode fixedfile["mode"]
-      group fixedfile["group"]
-      action :create_if_missing
-    end  
+    begin
+      grp_members = Etc.getgrnam(fixedfile["group"]).mem
+      remote_file path_client do
+        source file_url
+        owner fixedfile["user"]
+        mode fixedfile["mode"]
+        group fixedfile["group"]
+        action :create_if_missing
+      end
+    rescue ArgumentError => e
+      puts 'Group ' + fixedfile["group"] +' doesn\'t exist'
+      
+    end
+
   end
 end
 

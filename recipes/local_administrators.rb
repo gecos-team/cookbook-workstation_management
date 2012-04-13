@@ -26,19 +26,48 @@ admin_groups = node["local_administrators"]["admin_groups"]
 
 admin_groups.each do |grp|
   if !grp["name"].empty?
+    begin
+      grp_members = Etc.getgrnam(grp["name"]).mem
+    rescue ArgumentError => e
+      puts 'Group ' + grp["name"] +' doesn\'t exist'
+      next
+    end
+
     grp_members = Etc.getgrnam(grp["name"]).mem
-  
+    grp_members2 = []
+    grp_members.each do |members|
+      begin
+        Etc.getpwnam(members)
+        grp_members2 << members
+      rescue ArgumentError => e
+        puts 'User '+ members + ' doesn\'t exists'
+
+      end
+    end
+    grp_members = grp_members2  
     users_to_add = []
     users_to_remove = []
   
     admin_users_to_add = node["local_administrators"]["admin_users_to_add"]
     admin_users_to_add.each do |user|
-      users_to_add << user["user"] unless user["user"].empty?
+      begin
+        Etc.getpwnam(user["user"])
+        users_to_add << user["user"] unless user["user"].empty?
+      rescue ArgumentError => e
+        puts 'User '+ user["user"] + ' doesn\'t exists'
+
+      end
     end
   
     admin_users_to_remove=node["local_administrators"]["admin_users_to_remove"]
     admin_users_to_remove.each do |user|
-      users_to_remove << user["user"] unless user["user"].empty?
+      begin
+        Etc.getpwnam(user["user"])
+        users_to_remove << user["user"] unless user["user"].empty?
+      rescue ArgumentError => e
+        puts 'User '+ user["user"] + ' doesn\'t exists'
+
+      end
     end
   
     grp_members = grp_members + users_to_add
