@@ -26,8 +26,12 @@ admin_groups = node[:group_management][:extra_groups]
 
 admin_groups.each do |grp|
   if !grp["name"].empty?
-    grp_members = Etc.getgrnam(grp["name"]).mem
-
+    begin
+      grp_members = Etc.getgrnam(grp["name"]).mem
+    rescue ArgumentError => e
+      puts 'Group ' + grp["name"] +' doesn\'t exist'
+      next
+    end
     grp_members2 = []
     grp_members.each do |members|
       begin
@@ -45,12 +49,25 @@ admin_groups.each do |grp|
   
     admin_users_to_add = node[:group_management][:extra_users_to_add]
     admin_users_to_add.each do |user|
-      users_to_add << user["user"] unless user["user"].empty?
+      begin
+        Etc.getpwnam(user["user"])
+        users_to_add << user["user"] unless user["user"].empty?
+      rescue ArgumentError => e
+        puts 'User '+ user["user"] + ' doesn\'t exists'
+
+      end
     end
   
     admin_users_to_remove=node[:group_management][:extra_users_to_remove]
     admin_users_to_remove.each do |user|
-      users_to_remove << user["user"] unless user["user"].empty?
+      begin
+        Etc.getpwnam(user["user"])
+        users_to_remove << user["user"] unless user["user"].empty?
+      rescue ArgumentError => e
+        puts 'User '+ user["user"] + ' doesn\'t exists'
+
+      end
+
     end
   
     grp_members = grp_members + users_to_add

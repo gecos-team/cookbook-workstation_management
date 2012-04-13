@@ -69,7 +69,7 @@ attribute 'file_copy/file_copy/group',
   :description  => "File's owner group",
   :type         => "string",
   :required     => "required",
-  :wizard       => "groups",
+  :validation   => "alphanumericwithdotsdashes",
   :order        => "3",
   :recipes      => [ 'workstation_management::file_copy' ]
 
@@ -119,7 +119,7 @@ attribute 'local_administrators/admin_groups/name',
   :display_name => "Group name",
   :description  => "Administration purpose group's name",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :validation   => "alphanumericwithdotsdashes",
   :order        => "0",
   :recipes      => ['workstation_management::local_administrators']
 
@@ -133,7 +133,7 @@ attribute 'local_administrators/admin_users_to_add/user',
   :display_name => "User to add to admin groups",
   :description  => "User will be added to admin groups",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :validation   => "alphanumericwithdotsdashes",
   :order        => "1",
   :recipes      => ['workstation_management::local_administrators']
 
@@ -147,7 +147,7 @@ attribute 'local_administrators/admin_users_to_remove/user',
   :display_name => "User to remove from admin groups",
   :description  => "User to remove from admin groups",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :validation   => "alphanumericwithdotsdashes",
   :order        => "2",
   :recipes      => ['workstation_management::local_administrators']
 
@@ -175,7 +175,7 @@ attribute 'group_management/extra_users_to_add/user',
   :display_name => "User to add to extra groups",
   :description  => "User will be added to extra groups",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :validation   => "alphanumericwithdotsdashes",
   :order        => "1",
   :recipes      => ['workstation_management::extra_groups']
 
@@ -189,7 +189,7 @@ attribute 'group_management/extra_users_to_remove/user',
   :display_name => "User to remove from extra groups",
   :description  => "User to remove from extra groups",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :validation   => "alphanumericwithdotsdashes",
   :order        => "2",
   :recipes      => ['workstation_management::extra_groups']
 
