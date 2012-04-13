@@ -161,7 +161,7 @@ attribute 'group_management/extra_groups/name',
   :display_name => "Group name",
   :description  => "Group name",
   :type         => "string",
-  :validation   => "alphanumericwithdots",
+  :validation   => "alphanumericwithdotsdashes",
   :order        => "0",
   :recipes      => ['workstation_management::extra_groups']
 
