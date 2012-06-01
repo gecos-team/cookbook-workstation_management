@@ -1,22 +1,24 @@
 name              "workstation_management"
-maintainer        "Roberto C. Morano"
-maintainer_email  "rcmorano@emergya.com"
+maintainer        "Alfonso de Cala"
+maintainer_email  "alfonso.cala@juntadeandalucia.es"
 license           "Apache 2.0"
-description       "Cookbook that provides recipes for GECOS workstations administration"
-version           "0.1.1"
+description       "Cookbook providing recipes for GECOS workstations administration"
+version           "0.1.2"
 
 
 provides          "workstation_management::local_administrators"
 recipe            "workstation_management::local_administrators", "Add or Remove users from given administrators groups lists"
 
+provides          "workstation_management::local_users"
+recipe            "workstation_management::local_users", "Add/Remove local users and change their passwords"
+
 provides          "workstation_management::extra_groups"
 recipe            "workstation_management::extra_groups", "Add or Remove users from given groups lists"
 
-
-
 provides            "workstation_management::file_copy"
-provides            "workstation_management::file_delete"
 recipe            "workstation_management::file_copy", "Copy remote files to the Chef node."
+
+provides            "workstation_management::file_delete"
 recipe            "workstation_management::file_delete", "Remove local files of the Chef node."
 
 provides            "workstation_management::network_management"
@@ -48,7 +50,7 @@ attribute 'file_copy/file_copy/file_url',
 
 attribute 'file_copy/file_copy/path_client',
   :display_name => "Destination path",
-  :description  => "Destination path in the workstation",
+  :description  => "Local path and filename in the workstation",
   :type         => "string",
   :required     => "required",
   :validation   => "abspath",
@@ -91,6 +93,14 @@ attribute 'file_copy/file_copy/overwrite',
   :order        => "5",
   :recipes      => [ 'workstation_management::file_copy' ]
 
+attribute 'file_copy/file_copy/comments',
+  :display_name => "Comments",
+  :description  => "A reason to copy this file",
+  :type         => "string",
+  :order        => "6",
+  :recipes      => [ 'workstation_management::file_copy' ]
+
+
 attribute 'file_delete/file_delete',
   :display_name => "Remove Files",
   :description  => "List of files to delete",
@@ -107,6 +117,46 @@ attribute 'file_delete/file_delete/file_path',
   :order        => "0",
   :recipes      => [ 'workstation_management::file_delete' ]
 
+attribute 'file_copy/file_delete/comments',
+  :display_name => "Comments",
+  :description  => "A reason to delete this file",
+  :type         => "string",
+  :order        => "1",
+  :recipes      => [ 'workstation_management::file_delete' ]
+
+
+attribute 'local_users/local_users',
+  :display_name => "Local users",
+  :description  => "A list of users with local validation only",
+  :type         => "array",
+  :required     => "required",
+  :recipes      => ['workstation_management::local_users']
+
+attribute 'local_users/local_users/username',
+  :display_name => "User Name",
+  :description  => "Local user short name",
+  :type         => "string",
+  :required     => "required",
+  :validation   => "alphanumericwithdotsdashes",
+  :order        => "0",
+  :recipes      => [ 'workstation_management::local_users' ]
+
+attribute 'local_users/local_users/password',
+  :display_name => "Password",
+  :description  => "Secret key for this user",
+  :type         => "string",
+  :required     => "required",
+  :order        => "1",
+  :recipes      => [ 'workstation_management::local_users' ]
+
+attribute 'local_users/local_users/action',
+  :display_name => "Action",
+  :description  => "Create (and modify) or delete this user",
+  :type         => "string",
+  :choice       => [ "create", "delete" ],
+  :required     => "required",
+  :order        => "2",
+  :recipes      => [ 'workstation_management::local_users' ]
 
 attribute 'local_administrators/admin_groups',
   :display_name => "Administrator groups",
@@ -131,7 +181,7 @@ attribute 'local_administrators/admin_users_to_add',
 
 attribute 'local_administrators/admin_users_to_add/user',
   :display_name => "User to add to admin groups",
-  :description  => "User will be added to admin groups",
+  :description  => "This user will have admin privileges when logs into the workstation",
   :type         => "string",
   :validation   => "alphanumericwithdotsdashes",
   :order        => "1",
@@ -293,7 +343,7 @@ attribute 'ntp_sync/server',
   :type         => "string",
   :validation   => "alphanumericwithdotsdashes",
   :required     => "required",
-  :default      => "hora.juntadeandalucia.es",
+  :default      => "0.es.pool.ntp.org",
   :order        => "0",
   :recipes      => [ 'workstation_management::ntp_sync' ]
 

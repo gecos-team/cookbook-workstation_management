@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: workstation_management
-# Recipe:: admin_groups
+# Recipe:: local_administrators
 #
 # Copyright 2011 Junta de Andalucía
 #
